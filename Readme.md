@@ -4,13 +4,20 @@ A simple agentic system that routes queries to either fetch weather data or answ
 
 ## Setup
 
-### 1. Install Dependencies
-
-```bash
-pip install langchain langchain-openai langchain-community langgraph qdrant-client pypdf requests streamlit python-dotenv pytest langchain_text_splitters
+### 1. Clone repo
+```bash 
+git clone https://github.com/snepraj2709/langchain_agent.git
+cd langchain_agent
 ```
 
-### 2. Environment Variables
+### 2. Install Dependencies
+
+```bash
+pip install -r requirements.txt
+.venv/Scripts/activate
+```
+
+### 3. Environment Variables
 
 Create a `.env` file:
 
@@ -22,33 +29,18 @@ LANGCHAIN_TRACING_V2=true
 LANGCHAIN_PROJECT=weather-rag-agent
 ```
 
-## Project Structure
 
-```
-.
-├── .env
-├── agent.py          # LangGraph agent logic
-├── weather.py        # Weather API handler
-├── rag.py           # RAG implementation
-├── app.py           # Streamlit UI
-├── test_agent.py    # Test cases
-├── sample.pdf       # Sample PDF document
-└── README.md        # This file
-```
+### 4. Create Sample PDF
 
-## Running the Application
+Add your own `sample.pdf` file else by default it will be [Attention Is All You Need](https://proceedings.neurips.cc/paper_files/paper/2017/file/3f5ee243547dee91fbd053c1c4a845aa-Paper.pdf)
 
-### 1. Create Sample PDF
-
-Create a `sample.pdf` in the root with some content for testing.
-
-### 2. Run Tests
+### 5. Run Tests
 
 ```bash
 pytest test_agent.py -v
 ```
 
-### 3. Start Streamlit App
+### 6. Start Streamlit App
 
 ```bash
 streamlit run app.py
