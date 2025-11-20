@@ -1,6 +1,55 @@
-# LangGraph Agentic Pipeline - Weather & PDF RAG
+# 🌦️📄 LangGraph Agentic Pipeline — Weather & PDF RAG
 
-A simple agentic system that routes queries to either fetch weather data or answer questions from a PDF using RAG.
+A simple yet powerful agentic system that intelligently routes user queries to either fetch **real-time weather data** or answer questions from a **PDF using RAG**.
+
+---
+
+## 🎯 Objective
+
+Build a clean, modular AI pipeline using **LangChain**, **LangGraph**, and **LangSmith** to demonstrate:
+
+- Embeddings  
+- Vector databases  
+- Retrieval-Augmented Generation (RAG)  
+- Agentic decision-making  
+- Good coding & architectural practices  
+
+---
+
+## 📘 Project Overview
+
+This project implements a **decision-driven agentic pipeline** that evaluates each user query and determines the optimal processing route.
+
+Using **LangGraph** for workflow orchestration and node-based decision logic, the system intelligently chooses between two paths:
+
+### 🔹 1. Weather API  
+If the query relates to weather, the system:
+- Detects intent  
+- Calls the weather API  
+- Returns real-time meteorological data  
+
+### 🔹 2. PDF RAG (Retrieval-Augmented Generation)  
+If the query seeks information from the document:
+- The system retrieves relevant context from **Qdrant** vector DB  
+- Embeddings are generated from the provided PDF  
+- A language model synthesizes an answer  
+
+This hybrid approach ensures:
+- Accurate and context-aware responses  
+- Efficient routing and lower latency  
+- Scalable architecture suitable for larger multi-agent systems  
+
+---
+
+## 🌐 Chatbot in Action - Live  
+**Hosted App:**  
+https://langchain-agent-7c6j.onrender.com/
+
+---
+
+## 📊 Chatbot 
+
+![Chatbot UI](./data/chat_ui.png)
 
 ## Setup
 
