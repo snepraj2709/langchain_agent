@@ -21,7 +21,18 @@ def router_node(state: AgentState) -> AgentState:
     llm = ChatOpenAI(model="gpt-3.5-turbo", temperature=0)
     
     prompt = ChatPromptTemplate.from_messages([
-        ("system", "You are a router. Determine if the query is about weather or PDF content. Reply with only 'weather' or 'pdf'."),
+        ("system", """You are a routing assistant. Analyze the user's query and determine the appropriate route.
+
+Rules:
+- If the query asks about weather, temperature, climate, or mentions a city's weather conditions, respond with: weather
+- If the query asks about document content, PDF information, or what's mentioned in a document, respond with: pdf
+- Respond with ONLY one word: either 'weather' or 'pdf'
+
+Examples:
+- "What's the weather in London?" -> weather
+- "Tell me about the temperature in Paris" -> weather
+- "What is mentioned in the document?" -> pdf
+- "Summarize the PDF content" -> pdf"""),
         ("user", "{query}")
     ])
     
@@ -29,7 +40,19 @@ def router_node(state: AgentState) -> AgentState:
     result = chain.invoke({"query": state["query"]})
     
     route = result.content.strip().lower()
-    state["route"] = "weather" if "weather" in route else "pdf"
+    
+    # Check for explicit matches
+    if route == "weather" or "weather" in route:
+        state["route"] = "weather"
+    elif route == "pdf" or "pdf" in route or "document" in route:
+        state["route"] = "pdf"
+    else:
+        # Default to pdf for document-related queries
+        state["route"] = "pdf"
+    
+    print(f"[DEBUG] Query: {state['query']}")
+    print(f"[DEBUG] LLM Response: {route}")
+    print(f"[DEBUG] Chosen Route: {state['route']}")
     
     return state
 
@@ -58,6 +81,8 @@ def pdf_node(state: AgentState, rag_system: RAGSystem) -> AgentState:
     # Retrieve relevant chunks
     relevant_docs = rag_system.retrieve(state["query"])
     state["context"] = "\n\n".join(relevant_docs)
+    
+    print(f"[DEBUG] Retrieved {len(relevant_docs)} chunks")
     
     return state
 

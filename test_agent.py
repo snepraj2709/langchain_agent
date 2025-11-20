@@ -27,6 +27,11 @@ def test_rag_retrieval():
     
     assert isinstance(results, list)
     assert len(results) > 0
+    
+    # Test collection info
+    info = rag.get_collection_info()
+    assert "vectors_count" in info
+    assert info["vectors_count"] > 0
 
 def test_agent_weather_route():
     """Test agent routing to weather"""
