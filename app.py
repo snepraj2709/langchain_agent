@@ -2,7 +2,7 @@ import streamlit as st
 from agent import create_agent
 import os
 
-st.title("🤖 Agentic Pipeline - Weather & PDF RAG")
+st.title("🤖 Agentic Pipeline - Weather & [Attention is all you need](https://proceedings.neurips.cc/paper_files/paper/2017/file/3f5ee243547dee91fbd053c1c4a845aa-Paper.pdf) RAG")
 
 # Initialize agent
 if "agent" not in st.session_state:
