@@ -22,19 +22,18 @@ def router_node(state: AgentState) -> AgentState:
     
     prompt = ChatPromptTemplate.from_messages([
         ("system", """You are a routing assistant. Analyze the user's query and determine the appropriate route.
+            Rules:
+            - If the query asks about weather, temperature, climate, or mentions a city's weather conditions, respond with: weather
+            - If the query asks about document content, PDF information, or what's mentioned in a document, respond with: pdf
+            - Respond with ONLY one word: either 'weather' or 'pdf'
 
-Rules:
-- If the query asks about weather, temperature, climate, or mentions a city's weather conditions, respond with: weather
-- If the query asks about document content, PDF information, or what's mentioned in a document, respond with: pdf
-- Respond with ONLY one word: either 'weather' or 'pdf'
-
-Examples:
-- "What's the weather in London?" -> weather
-- "Tell me about the temperature in Paris" -> weather
-- "What is mentioned in the document?" -> pdf
-- "Summarize the PDF content" -> pdf"""),
-        ("user", "{query}")
-    ])
+            Examples:
+            - "What's the weather in London?" -> weather
+            - "Tell me about the temperature in Paris" -> weather
+            - "What is mentioned in the document?" -> pdf
+            - "Summarize the PDF content" -> pdf"""),
+                    ("user", "{query}")
+                ])
     
     chain = prompt | llm
     result = chain.invoke({"query": state["query"]})
